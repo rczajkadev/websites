@@ -1,7 +1,14 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "globalDependencies": [".env*", "**/.env*"],
-  "globalEnv": ["NODE_ENV"],
+  "globalEnv": [
+    "NODE_ENV",
+    "SANITY_STUDIO_PROJECT_ID",
+    "SANITY_STUDIO_DATASET",
+    "SANITY_PROJECT_ID",
+    "SANITY_DATASET",
+    "SANITY_API_VERSION"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

@@ -1,0 +1,29 @@
+{
+  "name": "@websites/sanity-blog",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "exports": {
+    "./client": "./src/client.ts",
+    "./queries": "./src/queries.ts",
+    "./api": "./src/api.ts",
+    "./image": "./src/image.ts",
+    "./content": "./src/content.ts",
+    "./types": "./src/types.ts",
+    "./env": "./src/env.ts"
+  },
+  "dependencies": {
+    "@sanity/client": "7.16.0",
+    "@sanity/image-url": "2.0.3",
+    "groq": "5.12.0"
+  },
+  "devDependencies": {
+    "@websites/eslint-config": "workspace:*",
+    "@websites/tsconfig": "workspace:*",
+    "@types/node": "25.3.3",
+    "eslint": "9.39.3",
+    "typescript": "5.9.3"
+  }
+}

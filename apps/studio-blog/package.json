@@ -1,0 +1,29 @@
+{
+  "name": "studio-blog",
+  "private": true,
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "lint": "eslint .",
+    "schema:extract": "sanity schema extract --path=./extract.json",
+    "typegen": "sanity typegen generate"
+  },
+  "dependencies": {
+    "@sanity/vision": "5.12.0",
+    "dotenv": "17.3.1",
+    "katex": "0.16.33",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "sanity": "5.12.0",
+    "styled-components": "6.3.11"
+  },
+  "devDependencies": {
+    "@websites/eslint-config": "workspace:*",
+    "@websites/tsconfig": "workspace:*",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.3",
+    "typescript": "5.9.3"
+  }
+}
