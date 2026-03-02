@@ -1,0 +1,10 @@
+node_modules
+dist
+pnpm-lock.yaml
+
+.turbo
+.vercel
+
+*.min.*
+
+next-env.d.ts
