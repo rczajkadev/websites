@@ -1,9 +1,11 @@
-name: Deploy Home To GitHub Pages
+name: Deploy Home
 
 on:
   push:
     branches:
       - main
+    paths:
+      - apps/home/**
 
   workflow_dispatch:
 
