@@ -8,6 +8,7 @@
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
     "format": "prettier --write **/*.{css,html,js,json,md,mjs,scss,ts,tsx,yaml,yml}",
+    "format:check": "prettier --check **/*.{css,html,js,json,md,mjs,scss,ts,tsx,yaml,yml}",
     "postinstall": "git config core.hooksPath .githooks"
   },
   "devDependencies": {
