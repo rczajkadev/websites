@@ -24,10 +24,8 @@ type SiteHeaderProps = {
 };
 
 const rssButton = (
-  <Button variant="ghost" size="icon" asChild>
-    <a href="/rss.xml" aria-label="RSS feed">
-      <Rss className="size-4" />
-    </a>
+  <Button variant="ghost" size="icon" aria-label="RSS feed unavailable" disabled>
+    <Rss className="size-4" />
   </Button>
 );
 
