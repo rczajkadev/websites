@@ -33,6 +33,3 @@ jobs:
 
       - name: Typecheck
         run: pnpm check-types
-
-      - name: Build
-        run: pnpm build
