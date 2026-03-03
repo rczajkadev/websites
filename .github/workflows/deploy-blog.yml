@@ -1,13 +1,16 @@
-name: Deploy Studio Blog
+name: Deploy Blog
 
 on:
   push:
     branches:
       - main
     paths:
-      - apps/studio-blog/**
+      - apps/blog/**
+      - packages/hooks/**
+      - packages/sanity-blog/**
+      - packages/search-blog/**
       - .github/actions/vercel-deploy/**
-      - .github/workflows/deploy-studio-blog.yml
+      - .github/workflows/deploy-blog.yml
 
   workflow_dispatch:
 
@@ -15,7 +18,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: studio-blog-vercel
+  group: blog-vercel
   cancel-in-progress: true
 
 jobs:
@@ -23,8 +26,13 @@ jobs:
     runs-on: ubuntu-latest
 
     environment:
-      name: studio-blog-vercel
+      name: blog-vercel
       url: ${{ steps.deployment.outputs.url }}
+
+    env:
+      SANITY_PROJECT_ID: ${{ secrets.STUDIO_BLOG_PROJECT_ID }}
+      SANITY_DATASET: ${{ secrets.STUDIO_DATASET }}
+      SANITY_API_VERSION: 2026-01-12
 
     steps:
       - name: Checkout
@@ -39,16 +47,16 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm lint --filter studio-blog
+        run: pnpm lint --filter blog
 
       - name: Typecheck
-        run: pnpm check-types --filter studio-blog
+        run: pnpm check-types --filter blog
 
-      - name: Deploy Studio Blog to Vercel
+      - name: Deploy Blog to Vercel
         id: deployment
         uses: ./.github/actions/vercel-deploy
         with:
-          app-directory: apps/studio-blog
+          app-directory: apps/blog
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}

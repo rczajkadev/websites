@@ -1,0 +1,56 @@
+name: Vercel Deploy
+description: Deploy selected app to Vercel
+
+inputs:
+  app-directory:
+    description: App directory (for example apps/blog)
+    required: true
+  vercel-token:
+    description: Vercel token
+    required: true
+  vercel-org-id:
+    description: Vercel organization ID
+    required: true
+  vercel-project-id:
+    description: Vercel project ID
+    required: true
+
+outputs:
+  url:
+    description: Deployment URL
+    value: ${{ steps.deployment.outputs.url }}
+
+runs:
+  using: composite
+
+  steps:
+    - name: Install Vercel CLI
+      shell: bash
+      run: pnpm install --global vercel@latest
+
+    - name: Pull Vercel Environment Information
+      shell: bash
+      working-directory: ${{ inputs.app-directory }}
+      run: vercel pull --yes --environment=production --token="${{ inputs.vercel-token }}"
+      env:
+        VERCEL_ORG_ID: ${{ inputs.vercel-org-id }}
+        VERCEL_PROJECT_ID: ${{ inputs.vercel-project-id }}
+
+    - name: Build Project Artifacts
+      shell: bash
+      working-directory: ${{ inputs.app-directory }}
+      run: vercel build --prod --token="${{ inputs.vercel-token }}"
+      env:
+        VERCEL_ORG_ID: ${{ inputs.vercel-org-id }}
+        VERCEL_PROJECT_ID: ${{ inputs.vercel-project-id }}
+
+    - name: Deploy Project Artifacts to Vercel
+      id: deployment
+      shell: bash
+      working-directory: ${{ inputs.app-directory }}
+      run: |
+        DEPLOYMENT_URL="$(vercel deploy --prebuilt --prod --yes --token="${{ inputs.vercel-token }}")"
+        echo "url=$DEPLOYMENT_URL" >> "$GITHUB_OUTPUT"
+      env:
+        VERCEL_ORG_ID: ${{ inputs.vercel-org-id }}
+        VERCEL_PROJECT_ID: ${{ inputs.vercel-project-id }}
