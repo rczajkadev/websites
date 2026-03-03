@@ -66,7 +66,7 @@ export default async function RootLayout({
         <HeaderVisibility>
           <Header categories={categories} className={cn('py-3', pageContentClassNames)} />
         </HeaderVisibility>
-        <div className={cn('min-h-screen pb-12 sm:pb-16', pageContentClassNames)}>{children}</div>
+        <div className={cn('pb-12 sm:pb-16', pageContentClassNames)}>{children}</div>
         <BackToTopButton />
       </body>
     </html>
