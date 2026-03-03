@@ -52,6 +52,9 @@ jobs:
       - name: Typecheck
         run: pnpm check-types --filter blog
 
+      - name: Generate search index
+        run: pnpm --filter blog generate:search-index
+
       - name: Deploy Blog to Vercel
         id: deployment
         uses: ./.github/actions/vercel-deploy

@@ -5,6 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "generate:search-index": "tsx scripts/generate-search-index.ts",
     "lint": "eslint .",
     "check-types": "tsc -p tsconfig.json --noEmit"
   },
