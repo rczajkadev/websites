@@ -1,10 +1,7 @@
 name: Vercel Deploy
-description: Deploy selected app to Vercel
+description: Deploy app to Vercel
 
 inputs:
-  app-directory:
-    description: App directory (for example apps/blog)
-    required: true
   vercel-token:
     description: Vercel token
     required: true
@@ -30,7 +27,6 @@ runs:
 
     - name: Pull Vercel Environment Information
       shell: bash
-      working-directory: ${{ inputs.app-directory }}
       run: vercel pull --yes --environment=production --token="${{ inputs.vercel-token }}"
       env:
         VERCEL_ORG_ID: ${{ inputs.vercel-org-id }}
@@ -38,7 +34,6 @@ runs:
 
     - name: Build Project Artifacts
       shell: bash
-      working-directory: ${{ inputs.app-directory }}
       run: vercel build --prod --token="${{ inputs.vercel-token }}"
       env:
         VERCEL_ORG_ID: ${{ inputs.vercel-org-id }}
@@ -47,7 +42,6 @@ runs:
     - name: Deploy Project Artifacts to Vercel
       id: deployment
       shell: bash
-      working-directory: ${{ inputs.app-directory }}
       run: |
         DEPLOYMENT_URL="$(vercel deploy --prebuilt --prod --yes --token="${{ inputs.vercel-token }}")"
         echo "url=$DEPLOYMENT_URL" >> "$GITHUB_OUTPUT"
