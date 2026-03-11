@@ -1,4 +1,6 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
 
 import { PageContent } from '@/app/_components';
 import { PortableTextRenderer } from '@/domain/content/ui';
@@ -11,9 +13,27 @@ export const dynamicParams = false;
 
 export const generateStaticParams = () => getPostSlugs();
 
+const getCachedPost = cache(getPost);
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getCachedPost(slug);
+
+  if (!post) notFound();
+
+  return {
+    title: post.title ?? 'Untitled',
+    description: post.excerpt?.replace(/\s+/g, ' ').trim()
+  };
+}
+
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = await getPost(slug);
+  const post = await getCachedPost(slug);
 
   if (!post) notFound();
 

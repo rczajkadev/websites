@@ -1,4 +1,6 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
 
 import { PageContent } from '@/app/_components';
 import { getPostsByTag, getTagSlugs } from '@/domain/posts/services';
@@ -8,9 +10,27 @@ export const dynamicParams = false;
 
 export const generateStaticParams = async () => getTagSlugs();
 
+const getCachedPostsByTag = cache(getPostsByTag);
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const pageData = await getCachedPostsByTag(slug);
+
+  if (!pageData) notFound();
+
+  return {
+    title: `#${pageData.tag}`,
+    description: `Articles tagged with ${pageData.tag}.`
+  };
+}
+
 export default async function TagPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [pageData, tagParams] = await Promise.all([getPostsByTag(slug), getTagSlugs()]);
+  const [pageData, tagParams] = await Promise.all([getCachedPostsByTag(slug), getTagSlugs()]);
 
   if (!pageData) notFound();
 

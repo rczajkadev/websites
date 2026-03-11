@@ -21,9 +21,16 @@ const geistMono = Geist_Mono({
   subsets: ['latin']
 });
 
+const BLOG_TITLE = 'Blog';
+const BLOG_DESCRIPTION =
+  "A personal blog about programming, AI, physics, and other things I'm learning and exploring.";
+
 export const metadata: Metadata = {
-  title: 'Blog',
-  description: 'Starter blog built with Next.js, Tailwind, TypeScript, and shadcn/ui.'
+  title: {
+    default: BLOG_TITLE,
+    template: `%s | ${BLOG_TITLE}`
+  },
+  description: BLOG_DESCRIPTION
 };
 
 const skipToContentButton = (

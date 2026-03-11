@@ -1,4 +1,6 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
 
 import { PageContent } from '@/app/_components';
 import { getCategorySlugs, getPostsByCategory } from '@/domain/posts/services';
@@ -8,9 +10,29 @@ export const dynamicParams = false;
 
 export const generateStaticParams = () => getCategorySlugs();
 
+const getCachedPostsByCategory = cache(getPostsByCategory);
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const pageData = await getCachedPostsByCategory(slug);
+
+  if (!pageData) notFound();
+
+  return {
+    title: pageData.categoryTitle,
+    description:
+      pageData.categoryDescription?.replace(/\s+/g, ' ').trim() ||
+      `Articles in ${pageData.categoryTitle}.`
+  };
+}
+
 export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const pageData = await getPostsByCategory(slug);
+  const pageData = await getCachedPostsByCategory(slug);
 
   if (!pageData) notFound();
 

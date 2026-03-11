@@ -5,10 +5,15 @@ import { AboutContent } from '@/domain/about/ui';
 
 import { PageContent } from '../_components';
 
-export const metadata: Metadata = {
-  title: 'About | Blog',
-  description: ''
-};
+export function generateMetadata(): Metadata {
+  const aboutInfo = getAboutInfo();
+  const description = aboutInfo.paragraphs[0]?.replace(/\s+/g, ' ').trim();
+
+  return {
+    title: 'About',
+    description
+  };
+}
 
 export default function AboutPage() {
   const aboutInfo = getAboutInfo();
