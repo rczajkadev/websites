@@ -1,0 +1,51 @@
+name: Deploy Blog From Sanity
+
+on:
+  repository_dispatch:
+    types:
+      - sanity-blog-published
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: blog-vercel
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: blog-vercel
+      url: ${{ steps.deployment.outputs.url }}
+
+    env:
+      SANITY_PROJECT_ID: ${{ secrets.STUDIO_BLOG_PROJECT_ID }}
+      SANITY_DATASET: ${{ secrets.STUDIO_DATASET }}
+      SANITY_API_VERSION: 2026-01-12
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js + pnpm
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate search index
+        run: pnpm --filter blog generate:search-index
+
+      - name: Deploy Blog to Vercel
+        id: deployment
+        uses: ./.github/actions/vercel-deploy
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
