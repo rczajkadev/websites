@@ -11,13 +11,13 @@
     "typegen": "sanity typegen generate"
   },
   "dependencies": {
-    "@sanity/vision": "5.12.0",
+    "@sanity/vision": "5.17.1",
     "dotenv": "17.3.1",
-    "katex": "0.16.33",
+    "katex": "0.16.40",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "sanity": "5.12.0",
-    "styled-components": "6.3.11"
+    "sanity": "5.17.1",
+    "styled-components": "6.3.12"
   },
   "devDependencies": {
     "@websites/eslint-config": "workspace:*",
