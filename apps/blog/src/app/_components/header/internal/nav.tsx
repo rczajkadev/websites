@@ -98,7 +98,7 @@ function CompactDesktopNav({ categories }: CategoryNavProps) {
 function InlineDesktopNav({ categories }: CategoryNavProps) {
   return (
     <div className="hidden items-center md:flex">
-      <Separator orientation="vertical" className="mx-1 my-2" />
+      <Separator orientation="vertical" className="ml-0 mr-1 my-2" />
       {categories.map((category) => (
         <Button key={category.id} variant="ghost" className="px-2.5" asChild>
           <Link href={`/categories/${category.slug}`} className="text-sm font-medium">
