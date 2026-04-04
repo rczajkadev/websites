@@ -1,8 +1,7 @@
 'use client';
 
-import { useSearchDialog, useSearchResults } from '@/domain/search/hooks';
+import { useSearchResults } from '@/domain/search/hooks';
 import {
-  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -13,11 +12,20 @@ import {
 
 import { SearchResult } from './internal/search-result';
 
-export function SearchDialog() {
-  const { open, setOpen, query, setQuery } = useSearchDialog();
-  const { results, isLoading, error } = useSearchResults(query, open);
+type SearchDialogProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  query: string;
+  onQueryChange: (query: string) => void;
+};
 
-  console.log(results);
+export function SearchDialog({
+  open,
+  onOpenChange,
+  query,
+  onQueryChange
+}: SearchDialogProps) {
+  const { results, isLoading, error } = useSearchResults(query, open);
 
   const renderCommandGroup = () => {
     if (isLoading)
@@ -48,7 +56,7 @@ export function SearchDialog() {
               href={result.href}
               title={result.title}
               excerpt={result.excerpt}
-              onNavigate={() => setOpen(false)}
+              onNavigate={() => onOpenChange(false)}
             />
           </CommandItem>
         ))}
@@ -57,11 +65,14 @@ export function SearchDialog() {
   };
 
   return (
-    <CommandDialog open={open} onOpenChange={setOpen} title="Search posts" showCloseButton={false}>
-      <Command>
-        <CommandInput value={query} onValueChange={setQuery} placeholder="Search posts..." />
-        <CommandList>{renderCommandGroup()}</CommandList>
-      </Command>
+    <CommandDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title="Search posts"
+      showCloseButton={false}
+    >
+      <CommandInput value={query} onValueChange={onQueryChange} placeholder="Search posts..." />
+      <CommandList>{renderCommandGroup()}</CommandList>
     </CommandDialog>
   );
 }

@@ -1,6 +1,9 @@
+'use client';
+
 import { ArrowRightIcon, Menu, X } from 'lucide-react';
 
 import type { PostCategory } from '@/domain/posts/models';
+import { useSearchDialog } from '@/domain/search/hooks';
 import { SearchDialog } from '@/domain/search/ui';
 import { ThemeToggle } from '@/domain/theme/ui';
 import { Button } from '@/ui/button';
@@ -23,12 +26,6 @@ type SiteHeaderProps = {
   className?: string;
 };
 
-// const rssButton = (
-//   <Button variant="ghost" size="icon" aria-label="RSS feed unavailable" disabled>
-//     <Rss className="size-4" />
-//   </Button>
-// );
-
 const homeLink = (
   <Button variant="outline" className="text-sm" asChild>
     <a href="https://rczajka.me">
@@ -39,14 +36,14 @@ const homeLink = (
 );
 
 export function Header({ categories, className }: SiteHeaderProps) {
+  const { open, setOpen, openDialog, query, setQuery } = useSearchDialog();
+
   const mobileHeaderContent = (
     <div className="flex items-center justify-between gap-3">
       <Logo />
       <div className="flex items-center gap-3">
-        <SearchButton />
+        <SearchButton onClick={openDialog} />
         <ThemeToggle />
-        {/* <HeaderSeparator /> */}
-        {/* {rssButton} */}
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -98,10 +95,8 @@ export function Header({ categories, className }: SiteHeaderProps) {
         <Nav categories={categories} />
       </div>
       <div className="flex items-center gap-3">
-        <SearchButton />
+        <SearchButton onClick={openDialog} />
         <ThemeToggle />
-        {/* <HeaderSeparator /> */}
-        {/* {rssButton} */}
         {homeLink}
       </div>
     </div>
@@ -116,7 +111,7 @@ export function Header({ categories, className }: SiteHeaderProps) {
     >
       <div className="block sm:hidden w-full">{mobileHeaderContent}</div>
       <div className="hidden sm:block w-full">{desktopHeaderContent}</div>
-      <SearchDialog />
+      <SearchDialog open={open} onOpenChange={setOpen} query={query} onQueryChange={setQuery} />
     </header>
   );
 }

@@ -1,8 +1,6 @@
 'use client';
 
-import { useEffect, useEffectEvent, useState } from 'react';
-
-import { listenOpenSearchEvent } from '@/domain/search/events';
+import { useCallback, useEffect, useEffectEvent, useState } from 'react';
 
 const isEditableTarget = (target: EventTarget | null) => {
   if (!(target instanceof HTMLElement)) return false;
@@ -30,10 +28,6 @@ export function useSearchDialog() {
   }, [open]);
 
   useEffect(() => {
-    return listenOpenSearchEvent(() => setOpen(true));
-  }, [setOpen]);
-
-  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== 'k') return;
       if (isEditableTarget(event.target)) return;
@@ -46,9 +40,14 @@ export function useSearchDialog() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
+  const openDialog = useCallback(() => {
+    setOpen(true);
+  }, []);
+
   return {
     open,
     setOpen,
+    openDialog,
     query,
     setQuery
   };
