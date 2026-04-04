@@ -24,6 +24,6 @@
     "@websites/tsconfig": "workspace:*",
     "@types/node": "25.5.0",
     "eslint": "9.39.3",
-    "typescript": "5.9.3"
+    "typescript": "6.0.2"
   }
 }
