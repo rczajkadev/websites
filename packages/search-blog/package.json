@@ -15,7 +15,7 @@
   "devDependencies": {
     "@websites/eslint-config": "workspace:*",
     "@websites/tsconfig": "workspace:*",
-    "eslint": "9.39.3",
+    "eslint": "10.2.0",
     "typescript": "6.0.2"
   }
 }

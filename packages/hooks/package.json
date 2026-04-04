@@ -16,7 +16,7 @@
     "@websites/eslint-config": "workspace:*",
     "@websites/tsconfig": "workspace:*",
     "@types/react": "19.2.14",
-    "eslint": "9.39.3",
+    "eslint": "10.2.0",
     "typescript": "6.0.2"
   }
 }
