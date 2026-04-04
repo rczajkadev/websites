@@ -69,7 +69,9 @@ function CompactDesktopNav({ categories }: CategoryNavProps) {
       <NavigationMenuList className="justify-start">
         <NavigationMenuItem>
           <Button variant="ghost" className="px-2.5" asChild>
-            <NavigationMenuTrigger className="text-sm font-medium">Categories</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="text-sm font-medium">
+              Categories
+            </NavigationMenuTrigger>
           </Button>
           <NavigationMenuContent>
             <ul className="min-w-48 flex flex-col gap-1 py-1">

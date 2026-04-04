@@ -24,10 +24,7 @@ type MobileNavigationSheetProps = {
   className?: string;
 };
 
-export function MobileNavigationSheet({
-  categories,
-  className
-}: MobileNavigationSheetProps) {
+export function MobileNavigationSheet({ categories, className }: MobileNavigationSheetProps) {
   return (
     <Sheet>
       <SheetTrigger asChild>

@@ -13,11 +13,7 @@ type DesktopHeaderProps = {
   className?: string;
 };
 
-export function DesktopHeader({
-  categories,
-  onOpenSearch,
-  className
-}: DesktopHeaderProps) {
+export function DesktopHeader({ categories, onOpenSearch, className }: DesktopHeaderProps) {
   return (
     <div className={cn('flex w-full items-center justify-between gap-3', className)}>
       <div className="flex items-center gap-1">
