@@ -15,14 +15,14 @@
     "./env": "./src/env.ts"
   },
   "dependencies": {
-    "@sanity/client": "7.20.0",
+    "@sanity/client": "7.21.0",
     "@sanity/image-url": "2.1.1",
     "groq": "5.20.0"
   },
   "devDependencies": {
     "@websites/eslint-config": "workspace:*",
     "@websites/tsconfig": "workspace:*",
-    "@types/node": "25.5.2",
+    "@types/node": "25.6.0",
     "eslint": "10.2.0",
     "typescript": "6.0.2"
   }
