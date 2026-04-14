@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
+import { getPosts } from '@/domain/posts/services';
 import { EmptyState, PostCardList } from '@/domain/posts/ui';
-import { getSearchIndex } from '@/infra/search';
 
 import { PageContent } from './_components';
 
@@ -12,11 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const { documents } = await getSearchIndex();
+  const posts = await getPosts();
 
   return (
-    <PageContent>
-      {documents.length ? <PostCardList posts={documents} /> : <EmptyState />}
-    </PageContent>
+    <PageContent>{posts.length ? <PostCardList posts={posts} /> : <EmptyState />}</PageContent>
   );
 }

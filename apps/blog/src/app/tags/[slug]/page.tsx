@@ -3,14 +3,14 @@ import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
 import { PageContent } from '@/app/_components';
-import { getPostsByTag, getTagSlugs } from '@/domain/posts/services';
+import { getPosts, getTagSlugs } from '@/domain/posts/services';
 import { PostCardList, Tags } from '@/domain/posts/ui';
 
 export const dynamicParams = false;
 
 export const generateStaticParams = async () => getTagSlugs();
 
-const getCachedPostsByTag = cache(getPostsByTag);
+const getCachedTaggedPosts = cache((slug: string) => getPosts({ type: 'tag', slug }));
 
 export async function generateMetadata({
   params
@@ -18,13 +18,13 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const pageData = await getCachedPostsByTag(slug);
+  const posts = await getCachedTaggedPosts(slug);
 
-  if (!pageData) notFound();
+  if (!posts.length) notFound();
 
   return {
-    title: `#${pageData.tag}`,
-    description: `Articles tagged with ${pageData.tag}.`,
+    title: `#${slug}`,
+    description: `Articles tagged with ${slug}.`,
     alternates: {
       canonical: `/tags/${slug}`
     }
@@ -33,11 +33,11 @@ export async function generateMetadata({
 
 export default async function TagPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [pageData, tagParams] = await Promise.all([getCachedPostsByTag(slug), getTagSlugs()]);
+  const [posts, tagParams] = await Promise.all([getCachedTaggedPosts(slug), getTagSlugs()]);
 
-  if (!pageData) notFound();
+  if (!posts.length) notFound();
 
-  const currentTagSlug = pageData.tag.toLowerCase();
+  const currentTagSlug = slug.toLowerCase();
   const relatedTags = tagParams
     .map(({ slug: tag }) => tag)
     .filter((tag) => tag.toLowerCase() !== currentTagSlug)
@@ -49,9 +49,9 @@ export default async function TagPage({ params }: { params: Promise<{ slug: stri
       aside={
         <section className="space-y-5 rounded-md border border-border bg-card p-5 md:sticky md:top-20">
           <div className="space-y-2">
-            <h1 className="text-2xl tracking-tight">#{pageData.tag}</h1>
+            <h1 className="text-2xl tracking-tight">#{slug}</h1>
             <p className="text-sm text-muted-foreground">
-              {pageData.posts.length} {pageData.posts.length === 1 ? 'article' : 'articles'}
+              {posts.length} {posts.length === 1 ? 'article' : 'articles'}
             </p>
           </div>
           {!!relatedTags.length && (
@@ -60,7 +60,7 @@ export default async function TagPage({ params }: { params: Promise<{ slug: stri
         </section>
       }
     >
-      {!!pageData.posts.length && <PostCardList posts={pageData.posts} />}
+      {!!posts.length && <PostCardList posts={posts} />}
     </PageContent>
   );
 }

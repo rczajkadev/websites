@@ -42,14 +42,3 @@ export type Post = {
   coverUrl?: string;
   coverAlt?: string | null;
 };
-
-export type PostsByCategory = {
-  categoryTitle: string;
-  categoryDescription?: string;
-  posts: Post[];
-};
-
-export type PostsByTag = {
-  tag: string;
-  posts: Post[];
-};

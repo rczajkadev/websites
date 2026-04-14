@@ -10,7 +10,7 @@ import { urlForImage } from '@websites/sanity-blog/image';
 
 import type { PostDetails } from '../models';
 
-export async function getPost(slug: string): Promise<PostDetails | null> {
+export async function getPostDetails(slug: string): Promise<PostDetails | null> {
   if (!slug) return null;
 
   const post = await getPostBySlug(slug);

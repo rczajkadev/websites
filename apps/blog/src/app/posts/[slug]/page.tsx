@@ -4,8 +4,7 @@ import { cache } from 'react';
 
 import { PageContent } from '@/app/_components';
 import { PortableTextRenderer } from '@/domain/content/ui';
-import { getPost } from '@/domain/posts/services/get-post';
-import { getPostSlugs } from '@/domain/posts/services/get-post-slugs';
+import { getPostDetails, getPostSlugs } from '@/domain/posts/services';
 import { PostHeader, PostImage, Tags } from '@/domain/posts/ui';
 import { formatDateLong } from '@/utils/dates';
 
@@ -13,7 +12,7 @@ export const dynamicParams = false;
 
 export const generateStaticParams = () => getPostSlugs();
 
-const getCachedPost = cache(getPost);
+const getCachedPostDetails = cache(getPostDetails);
 
 export async function generateMetadata({
   params
@@ -21,7 +20,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getCachedPost(slug);
+  const post = await getCachedPostDetails(slug);
 
   if (!post) notFound();
 
@@ -36,7 +35,7 @@ export async function generateMetadata({
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = await getCachedPost(slug);
+  const post = await getCachedPostDetails(slug);
 
   if (!post) notFound();
 
