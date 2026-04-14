@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 
+import { PageContent } from '@/app/(site)/_components';
 import { getPosts } from '@/domain/posts/services';
 import { EmptyState, PostCardList } from '@/domain/posts/ui';
-
-import { PageContent } from './_components';
 
 export const metadata: Metadata = {
   alternates: {

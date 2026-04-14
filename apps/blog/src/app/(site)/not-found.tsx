@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import { PageContent } from '@/app/(site)/_components';
 import { Button } from '@/ui/button';
-
-import { PageContent } from './_components';
 
 export const metadata: Metadata = {
   title: 'Page not found',

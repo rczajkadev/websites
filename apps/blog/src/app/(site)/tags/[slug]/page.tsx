@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
-import { PageContent } from '@/app/_components';
+import { PageContent } from '@/app/(site)/_components';
 import { getPosts, getTagSlugs } from '@/domain/posts/services';
 import { PostCardList, Tags } from '@/domain/posts/ui';
 
