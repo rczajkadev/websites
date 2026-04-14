@@ -33,6 +33,8 @@
   --border: oklch(0.3 0.005 252);
   --transition-duration: 0.2s;
   --container-width: 620px;
+  --section-gap: clamp(1.25rem, 3vw, 1.75rem);
+  --intro-gap: clamp(0.5rem, 1.5vw, 0.85rem);
 }
 
 html {
@@ -81,13 +83,16 @@ h3 {
 }
 
 .container {
+  display: grid;
+  gap: var(--section-gap);
+  width: min(100%, var(--container-width));
   max-width: var(--container-width);
   margin: 0 auto;
 }
 
-.hero {
+.intro {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--intro-gap);
 }
 
 .title {
@@ -97,7 +102,7 @@ h3 {
   letter-spacing: -0.02em;
 }
 
-.header {
+.identity {
   color: var(--muted-foreground);
   font-size: 1rem;
   font-weight: 800;
@@ -107,7 +112,6 @@ h3 {
 
 .text {
   color: var(--muted-foreground);
-  margin-top: 1.5rem;
   line-height: 2;
   letter-spacing: 0.01em;
   max-width: 60ch;
@@ -116,7 +120,6 @@ h3 {
 .links {
   display: inline-grid;
   gap: 1rem;
-  margin-top: 2rem;
 }
 
 .link {
