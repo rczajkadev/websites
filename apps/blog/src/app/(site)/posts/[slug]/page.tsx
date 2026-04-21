@@ -73,7 +73,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           coverUrl={coverUrl}
           coverAlt={coverAlt}
           coverImageLqip={coverImageLqip}
-          className="sm:w-[calc(100%+5rem)] sm:-mx-10"
+          className="sm:w-[calc(100%+3rem)] sm:-mx-6"
         />
         <Tags tags={tags} />
       </header>
