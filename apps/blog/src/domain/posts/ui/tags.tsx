@@ -11,7 +11,7 @@ export const Tags = ({ tags, className }: PostTagsProps) => {
   if (!tags?.length) return null;
 
   return (
-    <div className={cn('flex flex-wrap gap-x-3 gap-y-2 text-sm', className)}>
+    <div className={cn('flex flex-wrap gap-x-3 gap-y-2 text-base', className)}>
       {tags.map((tag) => (
         <Link
           key={tag}
