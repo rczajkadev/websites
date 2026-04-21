@@ -8,53 +8,16 @@ import {
   parseSearchQuery,
   searchDocuments
 } from '@websites/search-blog';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo } from 'react';
 
 const RESULTS_LIMIT = 8;
 
-type SearchIndexPayload = {
-  documents?: PostSearchDocument[];
-  index?: unknown;
-};
-
-export function useSearchResults(query: string, enabled: boolean) {
-  const [documents, setDocuments] = useState<PostSearchDocument[]>([]);
-  const [indexJson, setIndexJson] = useState<unknown | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const loadedRef = useRef(false);
+export function useSearchResults(
+  query: string,
+  documents: PostSearchDocument[],
+  indexJson: unknown | null
+) {
   const debouncedQuery = useDebounce(query);
-
-  const loadIndex = useCallback(async () => {
-    if (loadedRef.current || isLoading) return;
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch('/search-index.json');
-
-      if (!response.ok) throw new Error('Failed to fetch search index.');
-
-      const payload = (await response.json()) as SearchIndexPayload;
-
-      setDocuments(payload.documents ?? []);
-      setIndexJson(payload.index ?? null);
-      loadedRef.current = true;
-    } catch {
-      setDocuments([]);
-      setIndexJson(null);
-      setError('Could not load search index.');
-    } finally {
-      setIsLoading(false);
-    }
-  }, [isLoading]);
-
-  useEffect(() => {
-    if (!enabled) return;
-    void loadIndex();
-  }, [enabled, loadIndex]);
 
   const loadedIndex = useMemo(() => loadSearchIndexFromJson(indexJson), [indexJson]);
 
@@ -70,9 +33,5 @@ export function useSearchResults(query: string, enabled: boolean) {
     return filterPostsByQualifiers(textResults, parsedQuery).slice(0, RESULTS_LIMIT);
   }, [debouncedQuery, documents, loadedIndex]);
 
-  return {
-    results,
-    isLoading,
-    error
-  };
+  return results;
 }

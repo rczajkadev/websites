@@ -1,7 +1,7 @@
 'use client';
 
 import type { PostCategory } from '@/domain/posts/models';
-import { useSearchDialog } from '@/domain/search/hooks';
+import { useSearchDialog, useSearchIndex } from '@/domain/search/hooks';
 import { SearchDialog } from '@/domain/search/ui';
 import { cn } from '@/utils/cn';
 
@@ -13,7 +13,8 @@ type SiteHeaderProps = {
 };
 
 export function Header({ categories, className }: SiteHeaderProps) {
-  const { open, setOpen, openDialog, query, setQuery } = useSearchDialog();
+  const { documents, indexJson, isLoading, error, load } = useSearchIndex();
+  const { open, setOpen, openDialog, query, setQuery } = useSearchDialog({ onOpen: load });
 
   return (
     <header
@@ -28,7 +29,16 @@ export function Header({ categories, className }: SiteHeaderProps) {
       <div className="hidden w-full sm:block">
         <DesktopHeader categories={categories} onOpenSearch={openDialog} />
       </div>
-      <SearchDialog open={open} onOpenChange={setOpen} query={query} onQueryChange={setQuery} />
+      <SearchDialog
+        open={open}
+        onOpenChange={setOpen}
+        query={query}
+        onQueryChange={setQuery}
+        documents={documents}
+        indexJson={indexJson}
+        isLoading={isLoading}
+        error={error}
+      />
     </header>
   );
 }

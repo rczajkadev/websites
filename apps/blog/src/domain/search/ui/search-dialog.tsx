@@ -1,5 +1,7 @@
 'use client';
 
+import type { PostSearchDocument } from '@websites/search-blog';
+
 import { useSearchResults } from '@/domain/search/hooks';
 import {
   CommandDialog,
@@ -17,10 +19,23 @@ type SearchDialogProps = {
   onOpenChange: (open: boolean) => void;
   query: string;
   onQueryChange: (query: string) => void;
+  documents: PostSearchDocument[];
+  indexJson: unknown | null;
+  isLoading: boolean;
+  error: string | null;
 };
 
-export function SearchDialog({ open, onOpenChange, query, onQueryChange }: SearchDialogProps) {
-  const { results, isLoading, error } = useSearchResults(query, open);
+export function SearchDialog({
+  open,
+  onOpenChange,
+  query,
+  onQueryChange,
+  documents,
+  indexJson,
+  isLoading,
+  error
+}: SearchDialogProps) {
+  const results = useSearchResults(query, documents, indexJson);
 
   const renderCommandGroup = () => {
     if (isLoading)

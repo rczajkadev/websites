@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useEffectEvent, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const isEditableTarget = (target: EventTarget | null) => {
   if (!(target instanceof HTMLElement)) return false;
@@ -15,17 +15,36 @@ const isEditableTarget = (target: EventTarget | null) => {
   );
 };
 
-export function useSearchDialog() {
+type UseSearchDialogOptions = {
+  onOpen?: () => void | Promise<void>;
+};
+
+export function useSearchDialog({ onOpen }: UseSearchDialogOptions = {}) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
 
-  const clearQuery = useEffectEvent(() => {
+  const closeDialog = useCallback(() => {
     setQuery('');
-  });
+    setOpen(false);
+  }, []);
 
-  useEffect(() => {
-    if (!open) clearQuery();
-  }, [open]);
+  const openDialog = useCallback(() => {
+    void onOpen?.();
+    setOpen(true);
+  }, [onOpen]);
+
+  const setDialogOpen = useCallback(
+    (nextOpen: boolean) => {
+      if (!nextOpen) {
+        closeDialog();
+        return;
+      }
+
+      void onOpen?.();
+      setOpen(true);
+    },
+    [closeDialog, onOpen]
+  );
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -33,20 +52,23 @@ export function useSearchDialog() {
       if (isEditableTarget(event.target)) return;
 
       event.preventDefault();
-      setOpen((prev) => !prev);
+
+      if (open) {
+        closeDialog();
+        return;
+      }
+
+      void onOpen?.();
+      setOpen(true);
     };
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, []);
-
-  const openDialog = useCallback(() => {
-    setOpen(true);
-  }, []);
+  }, [closeDialog, onOpen, open]);
 
   return {
     open,
-    setOpen,
+    setOpen: setDialogOpen,
     openDialog,
     query,
     setQuery
