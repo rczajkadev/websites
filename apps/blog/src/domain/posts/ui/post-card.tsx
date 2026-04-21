@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { cn } from '@/utils/cn';
 
 import type { Post } from '../models';
+import { PostCardImage } from './post-card-image';
 import { PostHeader } from './post-header';
-import { PostImage } from './post-image';
 
 export type PostCardProps = Post & {
   updated?: string;
@@ -29,7 +29,12 @@ export function PostCard({
   return (
     <article className={cn('rounded-md', className)}>
       <Link href={href} className="group block space-y-4 rounded-md sm:space-y-5">
-        <PostImage coverUrl={coverUrl} coverAlt={coverAlt ?? title} preload={preloadCoverImage} />
+        <PostCardImage
+          title={title}
+          coverUrl={coverUrl}
+          coverAlt={coverAlt}
+          preload={preloadCoverImage}
+        />
         <PostHeader
           variant="simplified"
           headingLevel="h2"

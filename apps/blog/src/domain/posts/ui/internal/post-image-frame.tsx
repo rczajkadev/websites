@@ -2,31 +2,31 @@ import Image from 'next/image';
 
 import { cn } from '@/utils/cn';
 
-type PostImageProps = {
+type PostImageFrameProps = {
   coverUrl?: string;
   coverAlt?: string | null;
   coverImageLqip?: string | null;
   className?: string;
   imageClassName?: string;
-  sizes?: string;
+  sizes: string;
   preload?: boolean;
   hideIfMissing?: boolean;
 };
 
-export function PostImage({
+export function PostImageFrame({
   coverUrl,
   coverAlt,
   coverImageLqip,
   className,
   imageClassName,
-  sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 84vw, 820px',
+  sizes,
   preload = false,
   hideIfMissing = false
-}: PostImageProps) {
+}: PostImageFrameProps) {
   if (!coverUrl && hideIfMissing) return null;
 
   return (
-    <div className={cn('relative aspect-video w-full overflow-hidden', className)}>
+    <div className={cn('relative aspect-video overflow-hidden', className)}>
       {coverUrl ? (
         <Image
           src={coverUrl}

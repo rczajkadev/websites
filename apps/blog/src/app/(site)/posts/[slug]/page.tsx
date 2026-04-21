@@ -5,7 +5,7 @@ import { cache } from 'react';
 import { PageContent } from '@/app/(site)/_components';
 import { PortableTextRenderer } from '@/domain/content/ui';
 import { getPostDetails, getPostSlugs } from '@/domain/posts/services';
-import { PostHeader, PostImage, Tags } from '@/domain/posts/ui';
+import { PostCoverImage, PostHeader, Tags } from '@/domain/posts/ui';
 import { formatDateLong } from '@/utils/dates';
 
 export const dynamicParams = false;
@@ -69,12 +69,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           updated={lastUpdatedLabel}
           readTime={readTime}
         />
-        <PostImage
+        <PostCoverImage
           coverUrl={coverUrl}
           coverAlt={coverAlt}
           coverImageLqip={coverImageLqip}
-          preload
-          hideIfMissing
+          className="sm:w-[calc(100%+5rem)] sm:-mx-10"
         />
         <Tags tags={tags} />
       </header>
