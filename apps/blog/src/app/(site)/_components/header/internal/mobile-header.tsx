@@ -1,10 +1,8 @@
 import type { PostCategory } from '@/domain/posts/models';
-import { ThemeToggle } from '@/domain/theme/ui';
 import { cn } from '@/utils/cn';
 
 import { Brand } from './brand';
-import { MobileNavigationSheet } from './mobile-navigation-sheet';
-import { SearchButton } from './search-button';
+import { MobileHeaderActions } from './header-actions';
 
 type MobileHeaderProps = {
   categories: PostCategory[];
@@ -14,13 +12,9 @@ type MobileHeaderProps = {
 
 export function MobileHeader({ categories, onOpenSearch, className }: MobileHeaderProps) {
   return (
-    <div className={cn('flex items-center justify-between gap-3', className)}>
+    <div className={cn('flex items-center justify-between gap-4', className)}>
       <Brand />
-      <div className="flex items-center gap-3">
-        <SearchButton onClick={onOpenSearch} />
-        <ThemeToggle />
-        <MobileNavigationSheet categories={categories} />
-      </div>
+      <MobileHeaderActions categories={categories} onOpenSearch={onOpenSearch} />
     </div>
   );
 }

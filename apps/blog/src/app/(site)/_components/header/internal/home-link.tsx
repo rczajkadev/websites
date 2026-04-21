@@ -1,7 +1,8 @@
 import { ArrowRightIcon } from 'lucide-react';
 
-import { Button } from '@/ui/button';
 import { cn } from '@/utils/cn';
+
+import { HeaderOutlineButton, HeaderSheetButton } from './header-button';
 
 const ROOT_SITE_URL = 'https://rczajka.me';
 const DOMAIN = 'rczajka.me';
@@ -12,22 +13,22 @@ type HomeLinkProps = {
 
 export function DesktopHomeLink({ className }: HomeLinkProps) {
   return (
-    <Button variant="outline" className={cn('text-sm', className)} asChild>
+    <HeaderOutlineButton className={className} asChild>
       <a href={ROOT_SITE_URL}>
         <span>{DOMAIN}</span>
         <ArrowRightIcon className="size-4" />
       </a>
-    </Button>
+    </HeaderOutlineButton>
   );
 }
 
 export function MobileHomeLink({ className }: HomeLinkProps) {
   return (
-    <Button variant="outline" size="lg" className={cn('w-full justify-between', className)} asChild>
+    <HeaderSheetButton className={cn('w-full', className)} asChild>
       <a href={ROOT_SITE_URL}>
         <span>{DOMAIN}</span>
         <ArrowRightIcon className="size-4" />
       </a>
-    </Button>
+    </HeaderSheetButton>
   );
 }

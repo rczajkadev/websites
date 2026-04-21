@@ -2,8 +2,9 @@
 
 import { Search } from 'lucide-react';
 
-import { Button } from '@/ui/button';
 import { cn } from '@/utils/cn';
+
+import { HeaderIconButton } from './header-button';
 
 type SearchButtonProps = {
   className?: string;
@@ -12,14 +13,8 @@ type SearchButtonProps = {
 
 export function SearchButton({ className, onClick }: SearchButtonProps) {
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      aria-label="Search"
-      className={cn('cursor-pointer', className)}
-      onClick={onClick}
-    >
-      <Search className="size-4" />
-    </Button>
+    <HeaderIconButton aria-label="Search" className={cn(className)} onClick={onClick}>
+      <Search className="size-5" />
+    </HeaderIconButton>
   );
 }

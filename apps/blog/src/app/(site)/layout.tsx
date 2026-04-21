@@ -2,7 +2,6 @@ import { Footer } from '@/app/(site)/_components';
 import { BackToTopButton } from '@/app/(site)/_components/actions';
 import { Header, HeaderVisibility } from '@/app/(site)/_components/header';
 import { getCategories } from '@/domain/posts/services';
-import { cn } from '@/utils/cn';
 
 const skipToContentButton = (
   <a
@@ -12,8 +11,6 @@ const skipToContentButton = (
     Skip to content
   </a>
 );
-
-const pageContentClassNames = 'mx-auto w-full max-w-5xl px-4 sm:px-6';
 
 export default async function SiteLayout({
   children
@@ -27,9 +24,9 @@ export default async function SiteLayout({
       {skipToContentButton}
       <div className="flex min-h-screen flex-col">
         <HeaderVisibility>
-          <Header categories={categories} className={cn('py-3', pageContentClassNames)} />
+          <Header categories={categories} className="mx-auto w-full max-w-5xl px-4 py-4 sm:px-6" />
         </HeaderVisibility>
-        <div className={cn('flex flex-1 flex-col pb-6', pageContentClassNames)}>
+        <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 pb-6 sm:px-6">
           {children}
           <Footer className="mt-auto pt-16 sm:pt-20" />
         </div>

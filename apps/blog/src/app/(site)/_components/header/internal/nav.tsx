@@ -2,7 +2,6 @@ import { ArrowRightIcon } from 'lucide-react';
 import Link from 'next/link';
 
 import type { PostCategory } from '@/domain/posts/models';
-import { Button } from '@/ui/button';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,9 +10,10 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger
 } from '@/ui/navigation-menu';
-import { Separator } from '@/ui/separator';
 import { SheetClose } from '@/ui/sheet';
 import { cn } from '@/utils/cn';
+
+import { HeaderSheetButton, HeaderTextButton } from './header-button';
 
 type DesktopNavProps = {
   categories: PostCategory[];
@@ -25,8 +25,26 @@ export function DesktopNav({ categories, className }: DesktopNavProps) {
 
   return (
     <nav className={cn('flex items-center', className)} aria-label="Categories">
-      <CompactDesktopNav categories={categories} />
-      <InlineDesktopNav categories={categories} />
+      <NavigationMenu>
+        <NavigationMenuList className="justify-start">
+          <NavigationMenuItem>
+            <HeaderTextButton asChild>
+              <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
+            </HeaderTextButton>
+            <NavigationMenuContent>
+              <ul className="min-w-48 flex flex-col gap-1 py-1">
+                {categories.map((category) => (
+                  <li key={category.id}>
+                    <NavigationMenuLink asChild>
+                      <Link href={`/categories/${category.slug}`}>{category.title}</Link>
+                    </NavigationMenuLink>
+                  </li>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
     </nav>
   );
 }
@@ -45,67 +63,16 @@ export function MobileNav({ categories, className }: MobileNavProps) {
         {categories.map((category) => (
           <li key={category.id}>
             <SheetClose asChild>
-              <Button variant="outline" size="lg" className="w-full justify-between" asChild>
+              <HeaderSheetButton asChild>
                 <Link href={`/categories/${category.slug}`}>
                   {category.title}
                   <ArrowRightIcon className="size-4" />
                 </Link>
-              </Button>
+              </HeaderSheetButton>
             </SheetClose>
           </li>
         ))}
       </ul>
     </nav>
-  );
-}
-
-type CategoryNavProps = {
-  categories: PostCategory[];
-};
-
-function CompactDesktopNav({ categories }: CategoryNavProps) {
-  return (
-    <NavigationMenu className="md:hidden">
-      <NavigationMenuList className="justify-start">
-        <NavigationMenuItem>
-          <Button variant="ghost" className="px-2.5" asChild>
-            <NavigationMenuTrigger className="text-sm font-medium">
-              Categories
-            </NavigationMenuTrigger>
-          </Button>
-          <NavigationMenuContent>
-            <ul className="min-w-48 flex flex-col gap-1 py-1">
-              {categories.map((category) => (
-                <li key={category.id}>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href={`/categories/${category.slug}`}
-                      className="rounded-sm border border-transparent px-2.5 py-2 text-sm hover:border-border/70"
-                    >
-                      {category.title}
-                    </Link>
-                  </NavigationMenuLink>
-                </li>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
-  );
-}
-
-function InlineDesktopNav({ categories }: CategoryNavProps) {
-  return (
-    <div className="hidden items-center md:flex">
-      <Separator orientation="vertical" className="ml-0 mr-1 my-2" />
-      {categories.map((category) => (
-        <Button key={category.id} variant="ghost" className="px-2.5" asChild>
-          <Link href={`/categories/${category.slug}`} className="text-sm font-medium">
-            {category.title}
-          </Link>
-        </Button>
-      ))}
-    </div>
   );
 }

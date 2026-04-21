@@ -3,7 +3,6 @@
 import { Menu, X } from 'lucide-react';
 
 import type { PostCategory } from '@/domain/posts/models';
-import { Button } from '@/ui/button';
 import { Separator } from '@/ui/separator';
 import {
   Sheet,
@@ -16,6 +15,7 @@ import {
 } from '@/ui/sheet';
 import { cn } from '@/utils/cn';
 
+import { HeaderIconButton } from './header-button';
 import { MobileHomeLink } from './home-link';
 import { MobileNav } from './nav';
 
@@ -28,14 +28,9 @@ export function MobileNavigationSheet({ categories, className }: MobileNavigatio
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className={cn('cursor-pointer', className)}
-          aria-label="Toggle navigation menu"
-        >
+        <HeaderIconButton className={cn(className)} aria-label="Toggle navigation menu">
           <Menu className="size-5" />
-        </Button>
+        </HeaderIconButton>
       </SheetTrigger>
       <SheetContent side="right" className="w-full max-w-none border-l-0 p-4 sm:p-5">
         <SheetHeader className="sr-only">
@@ -43,14 +38,9 @@ export function MobileNavigationSheet({ categories, className }: MobileNavigatio
           <SheetDescription>Site navigation and search</SheetDescription>
         </SheetHeader>
         <SheetClose asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="cursor-pointer self-end"
-            aria-label="Close menu"
-          >
+          <HeaderIconButton className="self-end" aria-label="Close menu">
             <X className="size-5" />
-          </Button>
+          </HeaderIconButton>
         </SheetClose>
         <div className="space-y-6">
           <MobileNav categories={categories} className="mt-4" />
