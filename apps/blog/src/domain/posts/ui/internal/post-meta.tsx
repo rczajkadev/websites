@@ -62,11 +62,11 @@ export const PostMeta = ({ category, date, updated, readTime, className }: PostM
     >
       {categoryData &&
         (categoryData.slug ? (
-          <Badge size="md" variant="outline" asChild>
+          <Badge size="lg" variant="outline" asChild>
             <Link href={`/categories/${categoryData.slug}`}>{categoryData.title}</Link>
           </Badge>
         ) : (
-          <Badge size="md" variant="outline">
+          <Badge size="lg" variant="outline">
             {categoryData.title}
           </Badge>
         ))}

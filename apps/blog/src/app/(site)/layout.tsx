@@ -31,7 +31,7 @@ export default async function SiteLayout({
         </HeaderVisibility>
         <div className={cn('flex flex-1 flex-col pb-6', pageContentClassNames)}>
           {children}
-          <Footer className="mt-auto pt-16" />
+          <Footer className="mt-auto pt-16 sm:pt-20" />
         </div>
       </div>
       <BackToTopButton />
