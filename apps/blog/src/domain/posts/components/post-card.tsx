@@ -38,7 +38,7 @@ export function PostCard({
         <PostHeader
           variant="simplified"
           headingLevel="h2"
-          titleClassName="underline-offset-4 decoration-1 decoration-transparent transition-[text-decoration-color] duration-300 group-hover:underline group-hover:decoration-current"
+          titleClassName="underline-offset-4 decoration-1 decoration-transparent transition-[text-decoration-color] duration-300 group-hover:underline group-hover:decoration-current group-focus-visible:underline group-focus-visible:decoration-current"
           title={title}
           excerpt={excerpt}
           category={category}
