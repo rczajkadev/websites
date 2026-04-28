@@ -1,6 +1,6 @@
 import { cn } from '@/utils/cn';
 
-import { PostMeta } from './internal';
+import { PostMeta } from './_parts';
 
 type Category = {
   slug?: string | null;

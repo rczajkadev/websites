@@ -5,7 +5,7 @@ import { Check, Copy } from 'lucide-react';
 import { Button } from '@/ui/button';
 import { cn } from '@/utils/cn';
 
-import { useCopyContent } from '../../hooks';
+import { useCopyContent } from '../hooks';
 
 type CopyContentButtonProps = {
   content: string;

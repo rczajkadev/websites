@@ -14,7 +14,7 @@ import {
   CommandList
 } from '@/ui/command';
 
-import { SearchResult } from './internal/search-result';
+import { SearchResult } from './_parts/search-result';
 
 type SearchDialogProps = {
   open: boolean;

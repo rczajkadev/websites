@@ -1,7 +1,7 @@
 import { highlightCode } from '@/infra/shiki';
 import { cn } from '@/utils/cn';
 
-import { CopyContentButton } from '../internal';
+import { CopyContentButton } from '../../components';
 
 type CodeBlockValue = {
   language?: string;

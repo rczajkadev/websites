@@ -1,4 +1,4 @@
-import { Tags } from '@/domain/posts/ui';
+import { Tags } from '@/domain/posts/components';
 
 type TaxonomyAsideProps = {
   title: string;

@@ -1,8 +1,8 @@
 'use client';
 
 import type { PostCategory } from '@/domain/posts/models';
+import { SearchDialog } from '@/domain/search/components';
 import { useSearchDialog, useSearchIndex } from '@/domain/search/hooks';
-import { SearchDialog } from '@/domain/search/ui';
 import { cn } from '@/utils/cn';
 
 import { DesktopHeader, MobileHeader } from './internal';

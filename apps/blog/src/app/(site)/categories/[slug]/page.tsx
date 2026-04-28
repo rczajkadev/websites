@@ -1,30 +1,16 @@
-import { getCategoryBySlug } from '@websites/sanity-blog/api';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
 import { PageContent, TaxonomyAside } from '@/app/(site)/_components';
-import { getCategorySlugs, getPosts } from '@/domain/posts/services';
-import { PostCardList } from '@/domain/posts/ui';
+import { PostCardList } from '@/domain/posts/components';
+import { getCategoryPageData, getCategorySlugs } from '@/domain/posts/queries';
 
 export const dynamicParams = false;
 
 export const generateStaticParams = () => getCategorySlugs();
 
-const getCachedCategoryPageData = cache(async (slug: string) => {
-  const [category, posts] = await Promise.all([
-    getCategoryBySlug(slug),
-    getPosts({ type: 'category', slug })
-  ]);
-
-  if (!category || !posts.length) return null;
-
-  return {
-    categoryTitle: category.title ?? slug,
-    categoryDescription: category.description ?? undefined,
-    posts
-  };
-});
+const getCachedCategoryPageData = cache(getCategoryPageData);
 
 export async function generateMetadata({
   params
@@ -37,10 +23,9 @@ export async function generateMetadata({
   if (!pageData) notFound();
 
   return {
-    title: pageData.categoryTitle,
+    title: pageData.title,
     description:
-      pageData.categoryDescription?.replace(/\s+/g, ' ').trim() ||
-      `Articles in ${pageData.categoryTitle}.`,
+      pageData.description?.replace(/\s+/g, ' ').trim() || `Articles in ${pageData.title}.`,
     alternates: {
       canonical: `/categories/${slug}`
     }
@@ -56,9 +41,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   return (
     <PageContent
       className="space-y-12"
-      aside={
-        <TaxonomyAside title={pageData.categoryTitle} description={pageData.categoryDescription} />
-      }
+      aside={<TaxonomyAside title={pageData.title} description={pageData.description} />}
     >
       {!!pageData.posts.length && <PostCardList posts={pageData.posts} />}
     </PageContent>

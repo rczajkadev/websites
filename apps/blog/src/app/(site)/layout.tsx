@@ -1,7 +1,7 @@
 import { Footer } from '@/app/(site)/_components';
 import { BackToTopButton } from '@/app/(site)/_components/actions';
 import { Header, HeaderVisibility } from '@/app/(site)/_components/header';
-import { getCategories } from '@/domain/posts/services';
+import { getCategories } from '@/domain/posts/queries';
 
 const skipToContentButton = (
   <a

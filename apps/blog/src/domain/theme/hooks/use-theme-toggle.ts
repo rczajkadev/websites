@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 
-import { DEFAULT_THEME, Theme, THEME_STORAGE_KEY } from '../constants';
+import { DEFAULT_THEME, Theme, THEME_STORAGE_KEY } from '../config';
 
 function applyThemeToRoot(theme: Theme, root: HTMLElement = document.documentElement) {
   root.dataset.theme = theme;

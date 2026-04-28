@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
 import type { Post } from '@/domain/posts/models';
-import { getPosts } from '@/domain/posts/services';
+import { getPosts } from '@/domain/posts/queries';
 
 export const runtime = 'nodejs';
 

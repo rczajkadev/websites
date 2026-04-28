@@ -3,9 +3,9 @@ import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
 import { PageContent } from '@/app/(site)/_components';
-import { PortableTextRenderer } from '@/domain/content/ui';
-import { getPostDetails, getPostSlugs } from '@/domain/posts/services';
-import { PostCoverImage, PostHeader, Tags } from '@/domain/posts/ui';
+import { PortableTextRenderer } from '@/domain/content/portable-text';
+import { PostCoverImage, PostHeader, Tags } from '@/domain/posts/components';
+import { getPostDetails, getPostSlugs } from '@/domain/posts/queries';
 import { formatDateLong } from '@/utils/dates';
 
 export const dynamicParams = false;

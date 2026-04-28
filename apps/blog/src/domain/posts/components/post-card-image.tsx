@@ -1,7 +1,7 @@
 import { cn } from '@/utils/cn';
 
 import type { Post } from '../models';
-import { PostImageFrame } from './internal/post-image-frame';
+import { PostImageFrame } from './_parts';
 
 type PostCardImageProps = Pick<Post, 'title' | 'coverUrl' | 'coverAlt'> & {
   preload?: boolean;

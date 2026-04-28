@@ -1,4 +1,4 @@
-import { DEFAULT_THEME, THEME_STORAGE_KEY } from './constants';
+import { DEFAULT_THEME, THEME_STORAGE_KEY } from './config';
 
 export const themeInitScript = `
 (() => {

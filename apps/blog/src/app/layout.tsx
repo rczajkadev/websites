@@ -4,8 +4,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
-import { DEFAULT_THEME } from '@/domain/theme/constants';
-import { themeInitScript } from '@/domain/theme/scripts';
+import { DEFAULT_THEME } from '@/domain/theme/config';
+import { themeInitScript } from '@/domain/theme/init-script';
 import { cn } from '@/utils/cn';
 
 const geistSans = Geist({
