@@ -8,6 +8,12 @@ type SearchIndexPayload = {
   index?: unknown;
 };
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
+const isSearchIndexPayload = (value: unknown): value is SearchIndexPayload =>
+  isRecord(value) && (value.documents === undefined || Array.isArray(value.documents));
+
 export function useSearchIndex() {
   const [documents, setDocuments] = useState<PostSearchDocument[]>([]);
   const [indexJson, setIndexJson] = useState<unknown | null>(null);
@@ -30,7 +36,9 @@ export function useSearchIndex() {
 
         if (!response.ok) throw new Error('Failed to fetch search index.');
 
-        const payload = (await response.json()) as SearchIndexPayload;
+        const payload: unknown = await response.json();
+
+        if (!isSearchIndexPayload(payload)) throw new Error('Invalid search index payload.');
 
         setDocuments(payload.documents ?? []);
         setIndexJson(payload.index ?? null);

@@ -12,22 +12,27 @@ type HeadingProps = TextProps & {
   headingIds?: Record<string, string>;
 };
 
-export function Heading({ value, headingIds, children }: HeadingProps) {
-  const H = value.style as 'h1' | 'h2' | 'h3' | 'h3' | 'h4' | 'h5' | 'h6';
+const headingSizeMap = {
+  h1: 'text-4xl sm:text-5xl',
+  h2: 'text-3xl sm:text-4xl',
+  h3: 'text-2xl sm:text-3xl',
+  h4: 'text-xl sm:text-2xl',
+  h5: 'text-lg sm:text-xl',
+  h6: 'text-md sm:text-lg'
+} as const;
 
-  const sizeMap = {
-    h1: 'text-4xl sm:text-5xl',
-    h2: 'text-3xl sm:text-4xl',
-    h3: 'text-2xl sm:text-3xl',
-    h4: 'text-xl sm:text-2xl',
-    h5: 'text-lg sm:text-xl',
-    h6: 'text-md sm:text-lg'
-  };
+type HeadingTag = keyof typeof headingSizeMap;
+
+const isHeadingTag = (style: unknown): style is HeadingTag =>
+  typeof style === 'string' && style in headingSizeMap;
+
+export function Heading({ value, headingIds, children }: HeadingProps) {
+  const H = isHeadingTag(value.style) ? value.style : 'h2';
 
   return (
     <H
       id={getHeadingId(value, headingIds)}
-      className={cn('scroll-mt-24 mt-12 first:mt-0', sizeMap[H])}
+      className={cn('scroll-mt-24 mt-12 first:mt-0', headingSizeMap[H])}
     >
       {children}
     </H>

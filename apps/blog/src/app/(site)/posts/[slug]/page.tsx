@@ -65,6 +65,7 @@ export default async function PostPage({ params }: SlugPageProps) {
     bodyBlocks,
     headingIds
   } = post;
+
   const { publishedLabel, updatedLabel } = getPostDateLabels(post);
 
   return (
