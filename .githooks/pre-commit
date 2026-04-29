@@ -2,6 +2,4 @@
 
 set -eu
 
-pnpm run format
-pnpm run lint
-pnpm run check-types
+pnpm run lint:staged

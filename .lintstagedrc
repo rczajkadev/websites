@@ -1,0 +1,18 @@
+'/*':
+  - prettier --write --ignore-unknown
+
+'apps/blog/**':
+  - prettier --write --ignore-unknown
+  - pnpm --dir apps/blog exec eslint --no-warn-ignored
+
+'apps/home/**':
+  - prettier --write --ignore-unknown
+  - pnpm --dir apps/home exec eslint --no-warn-ignored
+
+'apps/studio-blog/**':
+  - prettier --write --ignore-unknown
+  - pnpm --dir apps/studio-blog exec eslint --no-warn-ignored
+
+'packages/{hooks,sanity-blog,search-blog,search-core}/**':
+  - prettier --write --ignore-unknown
+  - eslint --no-warn-ignored
