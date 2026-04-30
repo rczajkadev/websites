@@ -1,4 +1,6 @@
-import type { PortableTextValue, TocItem } from '@websites/sanity-blog/content';
+import type { PortableTextValue } from '@websites/sanity-blog/content';
+
+import type { TocItem } from '@/domain/toc/models';
 
 export type SlugParam = {
   slug: string;

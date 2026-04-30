@@ -5,4 +5,3 @@ export * from './post-card-list';
 export * from './post-cover-image';
 export * from './post-header';
 export * from './tags';
-export * from './toc';

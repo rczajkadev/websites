@@ -3,11 +3,7 @@
 import { useScrollSpy, useWindowSize } from '@websites/hooks';
 import { useMemo } from 'react';
 
-type TocItem = {
-  id: string;
-  label: string;
-  level: number;
-};
+import type { TocItem } from '../models';
 
 export function useActiveToc(toc: TocItem[]) {
   const ids = useMemo(() => toc.map((item) => item.id), [toc]);

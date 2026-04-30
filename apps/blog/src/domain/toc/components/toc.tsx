@@ -5,18 +5,13 @@ import { Separator } from '@/ui/separator';
 import { cn } from '@/utils/cn';
 
 import { useActiveToc } from '../hooks';
+import type { TocItem } from '../models';
 
-type TocItem = {
-  id: string;
-  label: string;
-  level: number;
-};
-
-type PostTocProps = {
+type TocProps = {
   toc: TocItem[];
 };
 
-export const Toc = ({ toc }: PostTocProps) => {
+export const Toc = ({ toc }: TocProps) => {
   const { ids, activeId } = useActiveToc(toc);
 
   if (!ids.length) return null;
