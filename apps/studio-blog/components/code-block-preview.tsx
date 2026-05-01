@@ -1,7 +1,7 @@
 import type { PreviewProps } from 'sanity';
 import styled from 'styled-components';
 
-import { asString } from '../lib/utils';
+import { getPreviewString } from '../lib/preview';
 import { PreviewEmpty, PreviewHeader } from './styled';
 
 const Pre = styled.pre`
@@ -15,8 +15,8 @@ const Pre = styled.pre`
 export const CodeBlockPreview = (props: PreviewProps) => {
   const { title, description, renderDefault } = props;
 
-  const language = asString(title);
-  const code = asString(description);
+  const language = getPreviewString(title);
+  const code = getPreviewString(description);
 
   const header = (
     <PreviewHeader>

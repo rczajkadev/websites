@@ -3,20 +3,21 @@ import { useMemo } from 'react';
 import type { PreviewProps } from 'sanity';
 import styled from 'styled-components';
 
-import { asString } from '../lib/utils';
-import { PreviewEmpty, PreviewHeader } from './styled';
+import { getPreviewString } from '../lib/preview';
+import { PreviewEmpty, PreviewHeader, PreviewSeparator } from './styled';
 
-const Content = styled.div<{ fancy: boolean }>`
+const Content = styled.div<{ $displayMode: boolean }>`
   margin: 0;
-  padding: ${({ fancy }) => (fancy ? '0' : '6px 12px')};
+  padding: ${({ $displayMode }) => ($displayMode ? '0' : '6px 12px')};
   overflow-x: auto;
 `;
 
 export const MathBlockPreview = (props: PreviewProps) => {
-  const { title, subtitle, renderDefault } = props;
+  const { subtitle, description, renderDefault } = props;
 
-  const displayMode = asString(title) === 'true';
-  const latex = asString(subtitle);
+  const mode = getPreviewString(description) === 'inline' ? 'inline' : 'block';
+  const latex = getPreviewString(subtitle);
+  const displayMode = mode === 'block';
 
   const renderedLatex = useMemo(() => {
     if (!latex) return null;
@@ -30,13 +31,13 @@ export const MathBlockPreview = (props: PreviewProps) => {
   const header = (
     <PreviewHeader>
       <span>Math Formula</span>
-      <span style={{ opacity: '0.2' }}>|</span>
-      <span>{displayMode ? 'Block' : 'Inline'}</span>
+      <PreviewSeparator>|</PreviewSeparator>
+      <span>{mode === 'block' ? 'Block' : 'Inline'}</span>
     </PreviewHeader>
   );
 
   const content = renderedLatex ? (
-    <Content fancy={displayMode} dangerouslySetInnerHTML={{ __html: renderedLatex }} />
+    <Content $displayMode={displayMode} dangerouslySetInnerHTML={{ __html: renderedLatex }} />
   ) : (
     <PreviewEmpty>No formula</PreviewEmpty>
   );
@@ -45,6 +46,7 @@ export const MathBlockPreview = (props: PreviewProps) => {
     ...props,
     title: header,
     subtitle: undefined,
+    description: undefined,
     children: content
   });
 };

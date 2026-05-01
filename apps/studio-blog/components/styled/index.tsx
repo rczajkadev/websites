@@ -11,3 +11,7 @@ export const PreviewEmpty = styled.div`
   font-size: 12px;
   padding: 6px 12px;
 `;
+
+export const PreviewSeparator = styled.span`
+  opacity: 0.2;
+`;
