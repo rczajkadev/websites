@@ -7,8 +7,8 @@ type UseHeaderVisibilityOptions = {
   topThreshold?: number;
 };
 
-const DEFAULT_SCROLL_DELTA = 16;
-const DEFAULT_TOP_THRESHOLD = 36;
+const DEFAULT_SCROLL_DELTA = 32;
+const DEFAULT_TOP_THRESHOLD = 56;
 
 export function useHeaderVisibility({
   scrollDelta = DEFAULT_SCROLL_DELTA,
