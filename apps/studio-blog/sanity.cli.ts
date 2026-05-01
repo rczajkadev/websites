@@ -2,12 +2,15 @@ import 'dotenv/config';
 
 import { defineCliConfig } from 'sanity/cli';
 
+import { getStudioEnv } from './lib/env';
+
 const TYPEGEN_PATH = '../../packages/sanity-blog';
+const { projectId, dataset } = getStudioEnv();
 
 export default defineCliConfig({
   api: {
-    projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? '',
-    dataset: process.env.SANITY_STUDIO_DATASET ?? ''
+    projectId,
+    dataset
   },
   typegen: {
     path: `${TYPEGEN_PATH}/src/**/*.{ts,tsx,js,jsx}`,

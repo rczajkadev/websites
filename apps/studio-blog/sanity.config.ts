@@ -1,19 +1,15 @@
 import 'katex/dist/katex.min.css';
 
 import { visionTool } from '@sanity/vision';
-import { type Config, defineConfig } from 'sanity';
+import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 
+import { getStudioEnv } from './lib/env';
 import { schemaTypes } from './schemas';
 
-const projectId = process.env.SANITY_STUDIO_PROJECT_ID;
-const dataset = process.env.SANITY_STUDIO_DATASET;
+const { projectId, dataset } = getStudioEnv();
 
-if (!projectId || !dataset) {
-  throw new Error('Missing SANITY_STUDIO_PROJECT_ID or SANITY_STUDIO_DATASET.');
-}
-
-const config: Config = defineConfig({
+export default defineConfig({
   name: 'default',
   title: 'Blog',
   projectId,
@@ -23,5 +19,3 @@ const config: Config = defineConfig({
     types: schemaTypes
   }
 });
-
-export default config;
