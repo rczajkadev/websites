@@ -3,6 +3,6 @@ import { config } from '@websites/eslint-config/reactjs';
 export default [
   ...config,
   {
-    ignores: ['.sanity/**']
+    ignores: ['.sanity/**', '.turbo/**', '.vercel/**', 'dist/**']
   }
 ];
