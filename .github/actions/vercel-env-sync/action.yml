@@ -1,0 +1,73 @@
+name: Vercel Environment Sync
+description: Sync environment variables to a Vercel project
+
+inputs:
+  vercel-token:
+    description: Vercel token
+    required: true
+  vercel-org-id:
+    description: Vercel organization ID
+    required: true
+  vercel-project-id:
+    description: Vercel project ID
+    required: true
+  environment-variables:
+    description: Vercel environment variables, one KEY=value pair per line
+    required: false
+    default: ''
+  sensitive-environment-variables:
+    description: Vercel sensitive environment variables, one KEY=value pair per line
+    required: false
+    default: ''
+
+runs:
+  using: composite
+
+  steps:
+    - name: Sync Vercel Environment Variables
+      shell: bash
+      env:
+        VERCEL_ENVIRONMENT_VARIABLES: ${{ inputs.environment-variables }}
+        VERCEL_SENSITIVE_ENVIRONMENT_VARIABLES: ${{ inputs.sensitive-environment-variables }}
+        VERCEL_ORG_ID: ${{ inputs.vercel-org-id }}
+        VERCEL_PROJECT_ID: ${{ inputs.vercel-project-id }}
+      run: |
+        set -euo pipefail
+
+        sync_environment_variables() {
+          local variables="$1"
+          local sensitive_flag="$2"
+
+          while IFS= read -r line || [[ -n "$line" ]]; do
+            line="${line%$'\r'}"
+
+            if [[ -z "${line//[[:space:]]/}" || "$line" =~ ^[[:space:]]*# ]]; then
+              continue
+            fi
+
+            if [[ "$line" != *=* ]]; then
+              echo "::error::Invalid environment variable definition. Expected KEY=value."
+              exit 1
+            fi
+
+            local key="${line%%=*}"
+            local value="${line#*=}"
+
+            key="${key#"${key%%[![:space:]]*}"}"
+            key="${key%"${key##*[![:space:]]}"}"
+
+            if [[ ! "$key" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]; then
+              echo "::error::Invalid environment variable key: $key"
+              exit 1
+            fi
+
+            if [[ -n "$sensitive_flag" ]]; then
+              printf '%s' "$value" | vercel env add "$key" production --force --sensitive --token="${{ inputs.vercel-token }}"
+            else
+              printf '%s' "$value" | vercel env add "$key" production --force --no-sensitive --token="${{ inputs.vercel-token }}"
+            fi
+          done <<< "$variables"
+        }
+
+        sync_environment_variables "$VERCEL_ENVIRONMENT_VARIABLES" ''
+        sync_environment_variables "$VERCEL_SENSITIVE_ENVIRONMENT_VARIABLES" 'sensitive'

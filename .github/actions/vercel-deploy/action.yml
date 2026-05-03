@@ -11,6 +11,14 @@ inputs:
   vercel-project-id:
     description: Vercel project ID
     required: true
+  environment-variables:
+    description: Vercel environment variables, one KEY=value pair per line
+    required: false
+    default: ''
+  sensitive-environment-variables:
+    description: Vercel sensitive environment variables, one KEY=value pair per line
+    required: false
+    default: ''
 
 outputs:
   url:
@@ -24,6 +32,15 @@ runs:
     - name: Install Vercel CLI
       shell: bash
       run: pnpm install --global vercel@latest
+
+    - name: Sync Vercel Environment Variables
+      uses: ./.github/actions/vercel-env-sync
+      with:
+        vercel-token: ${{ inputs.vercel-token }}
+        vercel-org-id: ${{ inputs.vercel-org-id }}
+        vercel-project-id: ${{ inputs.vercel-project-id }}
+        environment-variables: ${{ inputs.environment-variables }}
+        sensitive-environment-variables: ${{ inputs.sensitive-environment-variables }}
 
     - name: Pull Vercel Environment Information
       shell: bash

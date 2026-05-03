@@ -49,3 +49,7 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          environment-variables: |
+            SANITY_PROJECT_ID=${{ env.SANITY_PROJECT_ID }}
+            SANITY_DATASET=${{ env.SANITY_DATASET }}
+            SANITY_API_VERSION=${{ env.SANITY_API_VERSION }}
