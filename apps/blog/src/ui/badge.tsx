@@ -11,7 +11,7 @@ export const badgeVariants = cva(
       variant: {
         default: 'bg-primary/12 text-primary [a&]:hover:bg-primary/20',
         secondary: 'bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90',
-        outline: 'border-border border [a&]:hover:bg-accent'
+        outline: 'border-border border-2 [a&]:hover:bg-accent'
       },
       size: {
         sm: 'h-5 px-2 text-xs',

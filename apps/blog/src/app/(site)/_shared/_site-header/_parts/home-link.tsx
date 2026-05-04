@@ -13,7 +13,7 @@ type HomeLinkProps = {
 
 export function DesktopHomeLink({ className }: HomeLinkProps) {
   return (
-    <HeaderOutlineButton className={cn('rounded-full border-2', className)} asChild>
+    <HeaderOutlineButton className={cn('rounded-full', className)} asChild>
       <a href={ROOT_SITE_URL}>
         <span>{DOMAIN}</span>
         <ArrowRightIcon className="size-4" />
