@@ -5,9 +5,10 @@ import {
 } from '@portabletext/react';
 import { type PortableTextBlock, type PortableTextValue } from '@websites/sanity-blog/content';
 
+import { InlineCode } from '@/ui/inline-code';
+
 import {
   BulletList,
-  Code,
   CodeBlock,
   Heading,
   Image,
@@ -47,7 +48,7 @@ const buildPortableTextComponents = (headingIds?: Record<string, string>) =>
       number: (props) => <ListItem {...props} />
     },
     marks: {
-      code: Code,
+      code: InlineCode,
       link: Link
     },
     types: {

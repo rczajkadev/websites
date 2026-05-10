@@ -42,9 +42,3 @@ export function Heading({ value, headingIds, children }: HeadingProps) {
 export const Text = ({ children }: TextProps) => (
   <p className="leading-loose md:text-lg [&>strong]:text-foreground">{children}</p>
 );
-
-export const Code = ({ children }: TextProps) => (
-  <code className="text-xs md:text-sm rounded-xs bg-muted text-foreground px-1.5 py-0.5 font-mono font-medium">
-    {children}
-  </code>
-);
