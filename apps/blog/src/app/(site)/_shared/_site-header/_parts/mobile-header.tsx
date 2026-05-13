@@ -19,6 +19,7 @@ export function MobileHeader({ categories, onOpenSearch, className }: MobileHead
       <div className={cn('flex items-center gap-3', className)}>
         <SearchButton onClick={onOpenSearch} />
         <ThemeToggle />
+        {/* <LanguageButton /> */}
         <MobileNavigationSheet categories={categories} />
       </div>
     </div>

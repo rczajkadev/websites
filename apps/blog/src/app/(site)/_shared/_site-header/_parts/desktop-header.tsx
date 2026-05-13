@@ -23,6 +23,7 @@ export function DesktopHeader({ categories, onOpenSearch, className }: DesktopHe
       <div className={cn('flex items-center gap-3', className)}>
         <SearchButton onClick={onOpenSearch} />
         <ThemeToggle />
+        {/* <LanguageButton /> */}
         <DesktopHomeLink />
       </div>
     </div>

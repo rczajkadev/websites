@@ -2,6 +2,7 @@ export * from './brand';
 export * from './desktop-header';
 export * from './header-button';
 export * from './home-link';
+export * from './language-button';
 export * from './mobile-header';
 export * from './mobile-navigation-sheet';
 export * from './nav';
